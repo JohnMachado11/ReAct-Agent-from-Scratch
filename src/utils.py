@@ -168,7 +168,7 @@ def extract_action_and_action_input(text):
             returns (None, None) to indicate an invalid format.
     """
 
-    # Search for "Action:" and "Action Input:"" lines
+    # Search for "Action:" and "Action Input:" lines
     action_match = re.search(r"Action: (.*)", text)
     action_input_match = re.search(r"Action Input: (.*)", text)
 
