@@ -1,2 +1,4 @@
 openai==1.98.0
 prettyprint==0.1.5
+python-dotenv==1.1.1
+tavily-python==0.7.11
