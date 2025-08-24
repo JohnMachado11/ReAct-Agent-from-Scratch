@@ -1,3 +1,5 @@
+from utils import format_internet_results
+
 
 # Available tools and their descriptions
 llm_tools = [
@@ -23,6 +25,16 @@ llm_tools = [
             "Use only for generating or retrieving *textual* content—"
             "facts, explanations, jokes, etc. **Do NOT** perform any arithmetic "
             "(adding, subtracting, multiplying, dividing)."
+        )
+    },
+    {
+        "name": "internet_search",
+        "description": (
+            "Search the internet for up-to-date, factual information. "
+            "Always provide a plain string query as the Action Input "
+            "(not a tuple). Use this tool whenever the answer requires "
+            "current events, recent facts, or information beyond the model's "
+            "built-in knowledge."
         )
     }
 ]
@@ -113,3 +125,25 @@ def llm_knowledge(client, input):
     )
 
     return completion.choices[0].message.content
+
+
+def internet_search(client, input):
+    """
+    Use Tavily to search the internet.
+    """
+    print("     >> Invoking internet_search")
+
+    response = client.search(
+        query=input,
+        max_results=3,
+        search_depth="basic",
+        include_images=False,
+        include_image_descriptions=False,
+        include_answer=False,
+        include_raw_content=False
+    )
+
+    results = response.get("results", [])
+
+    formatted = format_internet_results(results, header="\n-- Internet Search Results --", max_items=3, snippet_chars=600)
+    return formatted

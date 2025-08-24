@@ -3,7 +3,7 @@
 
 A Python implementation of the **ReAct** (Reasoning and Acting) agent from scratch. No libraries, no abstractions, simple and straight to the point.
 
-> This agent ships with just five core tools. Intentionally minimal to showcase the **ReAct** loop in pure Python.
+> This agent ships with six core tools. Intentionally minimal to showcase the **ReAct** loop in pure Python.
 
 ----
 
@@ -38,12 +38,26 @@ More concretely:
   Divide `a` by `b`. Both must be `int` or `float`. `b` may not be zero.
 
 - **llm_knowledge(prompt)**  
-  Free-form text generation. **No arithmetic allowed.**
+  Free form text generation. **No arithmetic allowed.**
+
+- **internet_search(query)**  
+  Searches the web (via Tavily) and returns a **text only**, LLM friendly summary with sources.  
+  Input must be a `string`.
 
 ---
 
 ## Example of ReACT Agent Actions
-<img src="src/images/agent_actions.png" width="725">
+<img src="src/images/agent_actions.png" width="900">
+
+---
+
+## API Key Requirements
+  - `OPENAI_API_KEY` — for the OpenAI client
+  - `TAVILY_API_KEY` — for the Tavily search client
+
+Create a `.env` file in the **project root** (the same folder where you run `python src/agent.py`).
+
+Use the `env.example` file as reference for how the `.env` should be structured.
 
 ---
 

@@ -6,15 +6,24 @@ from tools import (
     calculator_divide, 
     calculator_multiply, 
     calculator_subtract, 
-    llm_knowledge)
+    llm_knowledge,
+    internet_search)
 
+from dotenv import load_dotenv
+from tavily import TavilyClient
 from openai import OpenAI
+import os
+
+load_dotenv()
 
 
 # Initialize OpenAI client with API Key
 client = OpenAI(
-    api_key="API Key goes here"
+    api_key=os.getenv("OPENAI_API_KEY")
 )
+
+# Initialize Tavily (internet search) client with API Key 
+tavily_client = TavilyClient(os.getenv("TAVILY_API_KEY"))
 
 # ---------------------  Main ReAct loop  ---------------------
 iterations = 1
@@ -53,6 +62,8 @@ while True:
             action_result = calculator_divide(a, b)
         elif action == "llm_knowledge":
             action_result = llm_knowledge(client, action_input)
+        elif action == "internet_search":
+            action_result = internet_search(tavily_client, action_input)
         
         print(f"\nObservation:", action_result)
 
